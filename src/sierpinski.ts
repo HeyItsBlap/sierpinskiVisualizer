@@ -16,7 +16,6 @@ const renderer = new THREE.WebGLRenderer({
 // DEFINE CONSTANTS 
 
 const SIZE = 100; // Tetrahedron size
-const POINT_AMOUNT = 1000000; // Amount of points rendered
 const tetrahedronVertices = generateTetrahedronVertices();
 
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -24,8 +23,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(300);
 camera.position.setY(150);
 camera.position.setX(100);
-
-const gridHelper = new THREE.GridHelper(200, 50);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
