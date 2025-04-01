@@ -5,7 +5,7 @@ import * as dat from 'dat.gui';
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
 const canvas = document.getElementById("bg") as HTMLCanvasElement;
 
@@ -15,14 +15,14 @@ const renderer = new THREE.WebGLRenderer({
 
 // DEFINE CONSTANTS 
 
-const SIZE = 100; // Tetrahedron size
+const SIZE = 500; // Tetrahedron size
 const tetrahedronVertices = generateTetrahedronVertices();
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(300);
-camera.position.setY(150);
-camera.position.setX(100);
+camera.position.setZ(0);
+camera.position.setY(400);
+camera.position.setX(0);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -32,7 +32,8 @@ let tetrahedronPoints: THREE.Points | null = null;
 const guiOptions = {
   showTetrahedron: true,
   showSierpinski: true,
-  pointAmount: 10000,
+  sierPointAmount: 500000,
+  tetraPointAmount: 100000,
 };
 
 const gui = new dat.GUI();
@@ -46,23 +47,27 @@ folder.add(guiOptions, 'showSierpinski').name('Sierpinski Tetrahedron').onChange
   if (sierpinskiPoints) sierpinskiPoints.visible = value;
 });
 
-folder.add(guiOptions, 'pointAmount', 10000, 1000000, 10000).name('Number of Points').onChange((value: number) => {
-  if (tetrahedronPoints) {
-    scene.remove(tetrahedronPoints);
-  }
+folder.add(guiOptions, 'sierPointAmount', 10000, 2000000, 10000).name('Number of Points (Sierpinski)').onChange((value: number) => {
   if (sierpinskiPoints) {
     scene.remove(sierpinskiPoints);
   }
-
-  tetrahedronPoints = createTetrahedronPoints(value);
   sierpinskiPoints = createSierPoints(value);
 
-  tetrahedronPoints.visible = guiOptions.showTetrahedron;
   sierpinskiPoints.visible = guiOptions.showSierpinski;
 });
 
-sierpinskiPoints = createSierPoints(guiOptions.pointAmount);
-tetrahedronPoints = createTetrahedronPoints(guiOptions.pointAmount);
+folder.add(guiOptions, 'tetraPointAmount', 10000, 2000000, 10000).name('Number of Points (Tetrahedron)').onChange((value: number) => {
+  if (tetrahedronPoints) {
+    scene.remove(tetrahedronPoints);
+  }
+
+  tetrahedronPoints = createTetrahedronPoints(value);
+
+  tetrahedronPoints.visible = guiOptions.showTetrahedron;
+});
+
+sierpinskiPoints = createSierPoints(guiOptions.sierPointAmount);
+tetrahedronPoints = createTetrahedronPoints(guiOptions.tetraPointAmount);
 
 animate();
 
