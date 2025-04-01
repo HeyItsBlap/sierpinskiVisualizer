@@ -43,11 +43,11 @@ folder.add(guiOptions, 'showTetrahedron').name('Tetrahedron').onChange((value) =
   if (tetrahedronPoints) tetrahedronPoints.visible = value;
 });
 
-folder.add(guiOptions, 'showSierpinski').name('Sierpinski Tetrahedron').onChange((value) => {
+folder.add(guiOptions, 'showSierpinski').name('Sierpinski').onChange((value) => {
   if (sierpinskiPoints) sierpinskiPoints.visible = value;
 });
 
-folder.add(guiOptions, 'sierPointAmount', 10000, 2000000, 10000).name('Number of Points (Sierpinski)').onChange((value: number) => {
+folder.add(guiOptions, 'sierPointAmount', 10000, 2000000, 10000).name('Sierpinski Points').onChange((value: number) => {
   if (sierpinskiPoints) {
     scene.remove(sierpinskiPoints);
   }
@@ -56,7 +56,7 @@ folder.add(guiOptions, 'sierPointAmount', 10000, 2000000, 10000).name('Number of
   sierpinskiPoints.visible = guiOptions.showSierpinski;
 });
 
-folder.add(guiOptions, 'tetraPointAmount', 10000, 2000000, 10000).name('Number of Points (Tetrahedron)').onChange((value: number) => {
+folder.add(guiOptions, 'tetraPointAmount', 10000, 2000000, 10000).name('Tetra Points').onChange((value: number) => {
   if (tetrahedronPoints) {
     scene.remove(tetrahedronPoints);
   }
